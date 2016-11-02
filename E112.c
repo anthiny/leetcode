@@ -7,40 +7,27 @@
  * };
  */
 
-bool find;
-int result;
-
 bool hasPathSum(struct TreeNode* root, int sum) {
-    find = false;
-    result = 0;
-    
+
     if (root == NULL){
         return false;
     }
-    travelingNode(root, sum);
-    return find;
-}
-
-void travelingNode(struct TreeNode* node, int target){
-    if (!find)
-    {
-        result = result + (node->val);
-        if (node->left != NULL){
-            travelingNode(node->left, target);
-        }
-        if (node->right != NULL){
-            travelingNode(node->right, target);
-        }
-        
-        if (node->right == NULL && node->left == NULL){
-            checkResult(result, target);
-        }
-        result = result - (node->val);
+    
+    int val = root->val;
+    bool lTemp = false;
+    bool rTemp = false;
+    
+    if (root->left != NULL){
+        lTemp = hasPathSum(root->left, sum-val);
     }
-}
-
-void checkResult(int num, int target){
-    if (result == target){
-        find = true;
+    if (root->right != NULL){
+        rTemp = hasPathSum(root->right, sum-val);
     }
+    
+    if (root->right == NULL && root->left == NULL){
+        if (val == sum){
+            return true;
+        }
+    }
+    return (lTemp || rTemp);
 }
