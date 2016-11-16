@@ -10,38 +10,28 @@
  * }
  */
 class Solution {
-    var first = true
     func swapPairs(_ head: ListNode?) -> ListNode? {
         if let unwrapped = head{
-            return swapNode(unwrapped)
+            if let unwrappedNext = unwrapped.next{
+                var temp = unwrappedNext.next
+                unwrappedNext.next = unwrapped
+                unwrapped.next = temp
+                swapNode(unwrapped)
+                return unwrappedNext
+            }
         }
-        else{
-            return head
-        }
+        return head
     }
     
-    func swapNode(_ node: ListNode) -> ListNode{
+    func swapNode(_ node: ListNode){
         if let nNode = node.next{
-            if first{
-                first = false
-                var temp = nNode.next
-                nNode.next = node
-                node.next = temp
-                swapNode(node)
-            }
-            else{
-                if let doubleN = nNode.next{
-                    var temp = doubleN.next
-                    doubleN.next = nNode
-                    nNode.next = temp
-                    node.next = doubleN
-                    swapNode(nNode)
-                }   
-            }
-            return nNode
-        }
-        else{
-            return node
+            if let doubleN = nNode.next{
+                var temp = doubleN.next
+                doubleN.next = nNode
+                nNode.next = temp
+                node.next = doubleN
+                swapNode(nNode)
+            }   
         }
     }
 }
