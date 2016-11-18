@@ -2,20 +2,15 @@ class Solution {
     func plusOne(_ digits: [Int]) -> [Int] {
         
         var temp = digits
-        var isAdd = true
+        var remain = 1
         
         for i in (0...(temp.count - 1)).reversed(){
-            if isAdd{
-                temp[i] = temp[i] + 1
-                isAdd = false
-            }
-            if temp[i] == 10{
-                temp[i] = 0
-                isAdd = true
-            }
+            temp[i] += remain
+            remain = temp[i]/10
+            temp[i] = temp[i]%10
         }
         
-        if isAdd{
+        if remain > 0{
             temp.insert(1, at: 0)
         }
         
